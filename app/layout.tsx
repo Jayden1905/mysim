@@ -3,7 +3,7 @@ import { Providers } from '@/components/layout/providers'
 import { Roboto } from 'next/font/google'
 import './globals.css'
 
-const inter = Roboto({ subsets: ['latin'], weight: ['400', '700', '900'] })
+const roboto = Roboto({ subsets: ['latin'], weight: ['400', '700', '900'] })
 
 export const metadata = {
   title: 'Create Next App',
@@ -19,10 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={` dark:bg-primary`}>
         <Providers>
           <Nav />
-          <main className="p-4">{children}</main>
+          <div className={roboto.className}>
+            <main className="px-12">{children}</main>
+          </div>
         </Providers>
       </body>
     </html>

@@ -5,9 +5,9 @@ import { SignInButton, SignOutButton } from '../Buttons/buttons'
 
 export const Nav = () => {
   return (
-    <nav className="flex justify-between p-4">
+    <nav className="flex items-center justify-between px-12 py-6">
       <h1>Logo</h1>
-      <ul className="flex gap-6">
+      <ul className="flex items-center gap-6">
         <li>
           <Link href={'/'}>Home</Link>
         </li>
@@ -18,13 +18,10 @@ export const Nav = () => {
           <Link href={'/contact'}>Contact</Link>
         </li>
         <li>
-          <ThemeSwitch />
-        </li>
-        <li>
           <SignInButton />
         </li>
         <li>
-          <SignOutButton />
+          <ThemeSwitch />
         </li>
       </ul>
     </nav>
