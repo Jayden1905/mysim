@@ -15,6 +15,9 @@ module.exports = {
         '2xl': '1400px',
       },
     },
+    fontFamily: {
+      ibm_plex_sans: ['IBM Plex Sans', 'sans-serif'],
+    },
     extend: {
       colors: {
         primary: '#191b1d',

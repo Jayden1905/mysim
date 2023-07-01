@@ -1,18 +1,17 @@
 'use client'
 
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
+import { LuLayoutDashboard } from 'react-icons/lu'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Button } from '../ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import { Button } from '../ui/button'
-import { DashboardIcon, DropdownMenuIcon } from '@radix-ui/react-icons'
-import { LuLayoutDashboard } from 'react-icons/lu'
+import { BiLogIn } from 'react-icons/bi'
 
 export function SignInButton() {
   const { data: session, status } = useSession()
@@ -25,38 +24,45 @@ export function SignInButton() {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger
-          className="cursor-pointer"
+          className="inset-0 m-0 cursor-pointer p-0 outline-none"
           aria-label="Avatar dropdown"
         >
           <Avatar className="select-none rounded-sm">
-            <AvatarImage src={session.user?.image!} alt="avatar" />
-            <AvatarFallback>
-              {session.user?.name?.charAt(0).toUpperCase()}
+            <AvatarImage
+              className="rounded-sm"
+              src={session.user?.image!}
+              alt="avatar"
+            />
+            <AvatarFallback className="rounded-sm">
+              {session.user?.name?.charAt(0).toUpperCase() || '?'}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem>
-            <LuLayoutDashboard className="mr-4" />
-            Dashboard
+          <DropdownMenuItem onClick={() => void signOut()}>
+            <BiLogIn className="mr-4 h-5 w-5" />
+            <p>Sign out</p>
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     )
   }
 
-  return <Button onClick={() => signIn()}>Sign In</Button>
+  return (
+    <Button aria-label="signin button" onClick={() => signIn()}>
+      Sign In
+    </Button>
+  )
 }
 
 export function SignOutButton() {
   const { status } = useSession()
   if (status === 'authenticated') {
-    return <button onClick={() => signOut()}>Sign out</button>
+    return (
+      <Button aria-label="signout button" onClick={() => signOut()}>
+        Sign out
+      </Button>
+    )
   }
 
   return null

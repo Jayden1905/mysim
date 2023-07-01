@@ -1,9 +1,7 @@
 import { Nav } from '@/components/NavMenu/Nav'
-import { Providers } from '@/components/layout/providers'
-import { Roboto } from 'next/font/google'
+import { Providers } from '@/components/Providers/providers'
 import './globals.css'
-
-const roboto = Roboto({ subsets: ['latin'], weight: ['400', '700', '900'] })
+import { ReactNode } from 'react'
 
 export const metadata = {
   title: 'Create Next App',
@@ -12,17 +10,17 @@ export const metadata = {
   author: 'Kyaw Za Yan Naing',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+type RootLayoutProps = {
+  children: ReactNode
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={` dark:bg-primary`}>
+      <body>
         <Providers>
-          <Nav />
-          <div className={roboto.className}>
+          <div className="h-screen font-ibm_plex_sans dark:bg-primary">
+            <Nav />
             <main className="px-12">{children}</main>
           </div>
         </Providers>
