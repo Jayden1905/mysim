@@ -6,18 +6,3 @@ export async function GET() {
 
   return NextResponse.json(users)
 }
-
-export async function PUT(request: Request) {
-  const { id, name } = await request.json()
-
-  const user = await prisma.user.update({
-    where: {
-      id,
-    },
-    data: {
-      name,
-    },
-  })
-
-  return
-}
