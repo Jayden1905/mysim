@@ -51,7 +51,7 @@ function LinkItem({
         }`}
       >
         {children}
-        <span className="block h-0.5 w-0 bg-white transition-all duration-500 group-hover:w-full"></span>
+        <span className="block h-0.5 w-0 bg-white transition-all duration-700 group-hover:w-full"></span>
       </Link>
     </>
   )

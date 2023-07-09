@@ -1,7 +1,7 @@
 import { Nav } from '@/components/NavMenu/Nav'
 import { Providers } from '@/components/Providers/providers'
-import './globals.css'
 import { ReactNode } from 'react'
+import './globals.css'
 
 type RootLayoutProps = {
   children: ReactNode

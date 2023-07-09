@@ -10,16 +10,14 @@ declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: {
       id: string
-      role: string | null
-      // ...other properties
-      // role: UserRole;
+      role: string
     } & DefaultSession['user']
   }
 }
 
 declare module 'next-auth/adapters' {
   interface AdapterUser extends DefaultUser {
-    role: string | null
+    role: string
   }
 }
 
@@ -43,10 +41,10 @@ export const authOptions: NextAuthOptions = {
           where: { id: user.id },
         })
 
-        if (prismaUser) {
+        if (prismaUser && prismaUser.role) {
           session.user = {
             ...user,
-            role: prismaUser.role || null,
+            role: prismaUser.role,
           }
         }
       }
