@@ -5,6 +5,6 @@ export function middleware(request: NextRequest) {
   //   return NextResponse.redirect(new URL('/', request.nextUrl).toString())
 }
 
-// export const config = {
-//   matcher: '/about',
-// }
+export const config = {
+  matcher: '/about',
+}

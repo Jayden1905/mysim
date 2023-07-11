@@ -4,7 +4,7 @@ import { ThemeProvider } from 'next-themes'
 import { SessionProvider } from 'next-auth/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-export const Providers = ({ children }: { children: React.ReactNode }) => {
+export function Providers({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false)
   const [loading, setLoading] = useState(true)
   const queryClient = new QueryClient()
