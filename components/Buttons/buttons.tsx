@@ -12,12 +12,19 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 import { BiLogIn } from 'react-icons/bi'
+import Spinner from '../Loaders/spinner'
+import { useRouter } from 'next/navigation'
 
 export function SignInButton() {
   const { data: session, status } = useSession()
+  const router = useRouter()
 
   if (status === 'loading') {
-    return <>...</>
+    return (
+      <Avatar className="gird select-none place-items-center rounded-sm">
+        <Spinner width="5" height="5" />
+      </Avatar>
+    )
   }
 
   if (status === 'authenticated') {
@@ -39,6 +46,11 @@ export function SignInButton() {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          <DropdownMenuItem onClick={() => router.push('/dashboard')}>
+            <LuLayoutDashboard className="mr-4 h-5 w-5" />
+            <p>Dashboard</p>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => void signOut()}>
             <BiLogIn className="mr-4 h-5 w-5" />
             <p>Sign out</p>

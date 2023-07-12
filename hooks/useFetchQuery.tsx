@@ -1,4 +1,6 @@
+'use client'
 import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 
 type Props = {
   queryKey: string[]
@@ -19,8 +21,10 @@ export default function useFetchQuery({
   refetch,
   enable,
 }: Props) {
+  const [fetchError, setFetchError] = useState<Error>()
+
   const twentyFourHours = 1000 * 60 * 60 * 24
-  const data = useQuery({
+  const res = useQuery({
     enabled: enable,
     queryKey: queryKey,
     queryFn: async () => {
@@ -29,7 +33,13 @@ export default function useFetchQuery({
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then((res) => res.json())
+      }).then((res) => {
+        if (!res.ok) {
+          throw new Error(res.statusText)
+        }
+
+        return res.json()
+      })
       return data
     },
     cacheTime: cacheTime ?? twentyFourHours,
@@ -39,11 +49,14 @@ export default function useFetchQuery({
       refetch && void refetch()
     },
     onError: (error) => {
-      console.log(error)
+      if (error instanceof Error) {
+        setFetchError(error)
+      }
     },
   })
 
   return {
-    ...data,
+    ...res,
+    fetchError,
   }
 }

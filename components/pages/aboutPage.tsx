@@ -1,46 +1,54 @@
 'use client'
 import useClientMutation from '@/hooks/useClientMutation'
-import useFetchQuery from '@/hooks/useFetchQuery'
 import { type User } from '@prisma/client'
+import { useQuery } from '@tanstack/react-query'
+import { useState } from 'react'
 import { Button } from '../ui/button'
+import useFetchQuery from '@/hooks/useFetchQuery'
 
 export function AboutPage() {
-  const usersFetchQueries = {
-    queryKey: ['users'],
-    fetchUrl: `/api/users`,
-    method: 'GET',
-  }
+  const twentyFourHours = 1000 * 60 * 60 * 24
 
   const {
     data: users,
     status: usersFetchStatus,
     refetch: refetchUsers,
-  } = useFetchQuery(usersFetchQueries)
+    isError,
+    fetchError: fetchUsersError,
+  } = useFetchQuery({
+    queryKey: ['users'],
+    fetchUrl: '/api/users',
+    method: 'GET',
+  })
 
   const usersMutateQueries = {
     endPoint: `/api/users/role`,
     method: 'PUT',
     body: {
       email: 'kyawzayannaing@gmail.com',
-      role: 'admin',
+      role: 'developer',
     },
     refetch: refetchUsers,
   }
 
   const updateRole = useClientMutation(usersMutateQueries)
 
+  if (usersFetchStatus === 'loading') {
+    return <div>Loading...</div>
+  }
+
+  if (isError) {
+    return <div>Error: {fetchUsersError?.message}</div>
+  }
+
   return (
     <div>
-      {usersFetchStatus === 'loading' && <div>Loading...</div>}
-      {usersFetchStatus === 'success' &&
-        users?.map((user: User) => (
-          <div key={user.id}>
-            {user.name} is a {user.role}
-          </div>
-        ))}
+      {users?.map((user: User) => (
+        <div key={user.id}>
+          {user.name} is a {user.role}
+        </div>
+      ))}
       <br />
-
-      {usersFetchStatus === 'error' && <div>Error fetching users</div>}
 
       <Button onClick={() => void updateRole.mutate()}>update role</Button>
     </div>
