@@ -1,4 +1,4 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/app/api/auth/[...nextauth]/options'
 import BlogForm from '@/components/Blog/blogForm'
 import { getServerSession } from 'next-auth'
 

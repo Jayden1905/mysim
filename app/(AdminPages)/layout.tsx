@@ -2,7 +2,7 @@ import SideBar from '@/components/NavMenu/sideBar'
 import TopBar from '@/components/NavMenu/topBar'
 import { getServerSession } from 'next-auth'
 import { ReactNode } from 'react'
-import { authOptions } from '../api/auth/[...nextauth]/route'
+import { authOptions } from '../api/auth/[...nextauth]/options'
 
 export default async function DashboardLayout({
   children,

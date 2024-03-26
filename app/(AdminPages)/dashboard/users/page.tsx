@@ -1,8 +1,8 @@
 import UserPage from '@/components/Pages/users'
-import { prisma } from '@/lib/prisma'
+import { getUsers } from '@/lib/actions'
 
 export default async function UsersPage() {
-  const users = await prisma.user.findMany()
+  const users = await getUsers()
   const userCount = users.length
 
   const userPageProps = {
