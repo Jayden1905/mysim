@@ -1,20 +1,20 @@
-"use client";
-import { isAdmin } from "@/lib/auth";
-import { cn } from "@/lib/utils";
-import { menuLinks } from "@/lib/links";
-import { signIn, signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { AiOutlineHome } from "react-icons/ai";
-import { GoSignIn } from "react-icons/go";
-import { LuLayoutDashboard } from "react-icons/lu";
-import { PiSignOut } from "react-icons/pi";
-import { RiMenu2Fill } from "react-icons/ri";
-import { FiSun } from "react-icons/fi";
-import { RiMoonFill } from "react-icons/ri";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
-import { useTheme } from "next-themes";
+'use client'
+import { isAdmin } from '@/lib/auth'
+import { cn } from '@/lib/utils'
+import { menuLinks } from '@/lib/links'
+import { signIn, signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
+import { AiOutlineHome } from 'react-icons/ai'
+import { GoSignIn } from 'react-icons/go'
+import { LuLayoutDashboard } from 'react-icons/lu'
+import { PiSignOut } from 'react-icons/pi'
+import { RiMenu2Fill } from 'react-icons/ri'
+import { FiSun } from 'react-icons/fi'
+import { RiMoonFill } from 'react-icons/ri'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Button } from '../ui/button'
+import { useTheme } from 'next-themes'
 
 import {
   DropdownMenu,
@@ -22,10 +22,10 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { AvatarDropDownProps, IconProps, LinkButtonProps } from "./types";
-import { updateUserRole } from "@/lib/actions";
-import { Roles } from "@prisma/client";
+} from '../ui/dropdown-menu'
+import { AvatarDropDownProps, IconProps, LinkButtonProps } from './types'
+import { updateUserRole } from '@/lib/actions'
+import { Roles } from '@prisma/client'
 
 export function SignInButton() {
   return (
@@ -36,11 +36,11 @@ export function SignInButton() {
     >
       Sign In
     </Button>
-  );
+  )
 }
 
 export function AvatarDropDown(props: AvatarDropDownProps) {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme()
 
   return (
     <DropdownMenu>
@@ -51,11 +51,11 @@ export function AvatarDropDown(props: AvatarDropDownProps) {
         <Avatar className="select-none rounded-sm">
           <AvatarImage
             className="rounded-sm"
-            src={props.session.user?.image || ""}
+            src={props.session.user?.image || ''}
             alt="avatar"
           />
           <AvatarFallback className="rounded-sm">
-            {props.session.user?.name?.charAt(0).toUpperCase() || "?"}
+            {props.session.user?.name?.charAt(0).toUpperCase() || '?'}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -92,22 +92,22 @@ export function AvatarDropDown(props: AvatarDropDownProps) {
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
-            setTheme(theme === "dark" ? "light" : "dark");
+            setTheme(theme === 'dark' ? 'light' : 'dark')
           }}
         >
-          <Icon icon={theme === "dark" ? FiSun : RiMoonFill} />
-          <p>{theme === "dark" ? "Light" : "Dark"}</p>
+          <Icon icon={theme === 'dark' ? FiSun : RiMoonFill} />
+          <p>{theme === 'dark' ? 'Light' : 'Dark'}</p>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }
 
 export function DashboardAvatarDropDown(props: AvatarDropDownProps) {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme()
 
   const usernameFirstLetter =
-    props.session?.user?.name?.charAt(0).toUpperCase() || "?";
+    props.session?.user?.name?.charAt(0).toUpperCase() || '?'
 
   return (
     <DropdownMenu>
@@ -120,7 +120,7 @@ export function DashboardAvatarDropDown(props: AvatarDropDownProps) {
             <AvatarImage
               referrerPolicy="no-referrer"
               className="rounded-md"
-              src={props.session.user?.image || ""}
+              src={(props.session.user && props.session.user?.image) || ''}
               alt="avatar"
             />
             <AvatarFallback className="rounded-sm">
@@ -130,7 +130,7 @@ export function DashboardAvatarDropDown(props: AvatarDropDownProps) {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <Link scroll={false} href={"/"} className="">
+        <Link scroll={false} href={'/'} className="">
           <DropdownMenuItem>
             <Icon icon={AiOutlineHome} />
             <p>Home</p>
@@ -143,38 +143,38 @@ export function DashboardAvatarDropDown(props: AvatarDropDownProps) {
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
-            setTheme(theme === "dark" ? "light" : "dark");
+            setTheme(theme === 'dark' ? 'light' : 'dark')
           }}
         >
-          <Icon icon={theme === "dark" ? FiSun : RiMoonFill} />
-          <p>{theme === "dark" ? "Light" : "Dark"}</p>
+          <Icon icon={theme === 'dark' ? FiSun : RiMoonFill} />
+          <p>{theme === 'dark' ? 'Light' : 'Dark'}</p>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }
 
 export function LinkButton(props: LinkButtonProps) {
-  const pathname = usePathname();
-  const active = pathname === props.href;
+  const pathname = usePathname()
+  const active = pathname === props.href
 
   return (
     <>
       <Link
         href={props.href}
         className={`tracking-wider transition duration-300 relative ${
-          active ? "opacity-100" : "opacity-60"
+          active ? 'opacity-100' : 'opacity-60'
         } hover:opacity-100 transition-all duration-75 ease-in-out`}
         scroll={false}
       >
         {props.children}
       </Link>
     </>
-  );
+  )
 }
 
 export function HamburgerMenu() {
-  const { data: sessionData } = useSession();
+  const { data: sessionData } = useSession()
 
   return (
     <DropdownMenu>
@@ -213,21 +213,21 @@ export function HamburgerMenu() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }
 
 export function Icon(props: IconProps) {
-  return <props.icon className={cn("mr-4 h-5 w-5", props.className)} />;
+  return <props.icon className={cn('mr-4 h-5 w-5', props.className)} />
 }
 
 export function UpdateUserButton() {
-  const router = useRouter();
+  const router = useRouter()
   return (
     <div>
       <Button
         onClick={() =>
           updateUserRole({
-            email: "kyawzayannaing@gmail.com",
+            email: 'kyawzayannaing@gmail.com',
             role: Roles.developer,
           }).then(() => router.refresh())
         }
@@ -235,5 +235,5 @@ export function UpdateUserButton() {
         Update Role
       </Button>
     </div>
-  );
+  )
 }
